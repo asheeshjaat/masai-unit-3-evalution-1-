@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #products{
+        margin: auto;
+        text-align: center;
+    }
+    #products>input{
+        display: block;
+        width: 400px;
+        margin: auto;
+        
+    }
+    #products>input>button{
+        text-align: center;
+    }
+    h1{
+        text-align: center;
+    }
+</style>
+<body>
+    <button id="show_products">Show products</button>
+    <h1>Add Products--</h1>
+ 
+    <form action="" id="products">
+        <input type="text" id="type" placeholder="type">
+        <input type="text" id="desc" placeholder="description">
+        <input type="number" id="price" placeholder="price">
+        <input type="url" name="image" id="image" placeholder="img-url">
+        <button id="add_products">add products</button>
+    </form>
+</body>
+</html><script>
+var form=document.querySelector("#products")
+var add=document.querySelector("#add_products")
+add.addEventListener("click",addproducts)
+function productsdata(type,desc,price,image){
+    this.type=type;
+    this.desc=desc;
+    this.price=price;
+    this.image=image;
+}
+var products=JSON.parse(localStorage.getItem("products"))||[]
+function addproducts(){
+
+var type=form.type.value;
+var desc=form.desc.value;
+var price=form.price.value;
+var image=form.image.value;
+var p1=new productsdata(type,desc,price,image)
+products.push(p1)
+localStorage.setItem("products",JSON.stringify(products))
+form.value=""
+}
+document.querySelector("#show_products").addEventListener("click",function(){
+    window.location.href="inventory.html"
+})
+</script>

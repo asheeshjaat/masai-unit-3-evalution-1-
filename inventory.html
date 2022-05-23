@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory page</title>
+</head>
+<style>
+    #all_products{
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        gap: 20px;
+
+}
+#all_products>div{
+    width: 60%;
+    height: 100px;
+    text-align: center;
+}
+#all_products>div>img{
+    width: 100%;
+    height: 150%;
+}
+</style>
+<body>
+    <button id="add_more_products">Add more products</button>
+    <div id="all_products"></div>
+</body>
+</html>
+<script>
+    var all=document.querySelector("#all_products")
+    var products=JSON.parse(localStorage.getItem("products"))
+    display(products)
+    function display(data){
+        all.innerHTML=null;
+        data.forEach(function(elem,index){
+            var div=document.createElement("div")
+            var image=document.createElement("img")
+            image.src=elem.image
+            var type=document.createElement("p")
+            type.innerText=elem.type;
+            var price=document.createElement("p")
+            price.innerText=elem.price;
+            var des=document.createElement("p")
+            des.innerText=elem.desc;
+            var remove=document.createElement("button")
+            remove.innerText="Remove"
+            remove.setAttribute("id","remove_product")
+            remove.addEventListener("click",function(){
+                removeq(index);
+            })
+            div.append(image,type,price,des,remove)
+    all.append(div)
+        })
+    }
+    var add=document.querySelector("#add_more_products")
+    add.addEventListener("click",function(){
+        window.location.href="index.html"
+    })
+function removeq(index){
+    var products=JSON.parse(localStorage.getItem("products"))
+   products.splice(index,1)
+    display(products)
+    localStorage.setItem("products",JSON.stringify(products))
+}
+</script>
